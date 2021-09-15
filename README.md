@@ -1,28 +1,28 @@
-# adrian-geotools
-Adrian-geotools is a package of three python tools developed by Adrian Lundell for NVI Inc. during an internship over the summer 2021.
+# adrianx-geotools
+Adrians-geotools is a package of three python tools originally developed by Adrian Lundell for NVI Inc. during an internship over the summer 2021.
 It contains the three tools 
 
-*EopTool, for comparing residuals between different earth orientation parameter measurments. Handles .eob, .eop .fil and .txt formats.
-*HelmertTool, for transforming between different terrestial reference frames. Handles .sta formats.
-*IcrfTool, for transformig between different celestial reference frames. Handles .src formats.
+- EopTool, for comparing residuals between different earth orientation parameter measurments. Handles .eob, .eop .fil and .txt formats.
+- HelmertTool, for transforming between different terrestial reference frames. Handles .sta formats.
+- IcrfTool, for transformig between different celestial reference frames. Handles .src formats.
 
-For any questions please email the autor at adrian.lundell@gmail.com.
+For any questions please email the author at adrian.lundell@gmail.com.
 
 ## Installation 
 The package is installable using PyPi through
 
 ```bash
-pip install adrian-geotools
+pip install adrians-geotools
 ```
 
-or by downloading the source code from github and installing he requirements
+or by downloading the source code from github and installing the requirements
 
 ```bash
-git clone <link>
-pip install -f adrian-geotools/requirements.txt
+git clone https://github.com/AdrianLundell/adrians-geotools.git
+pip install -r adrians-geotools/requirements.txt
 ```
 
-Installation is generally recommended within a seperate virtual environment to avoid, please see https://docs.python.org/3/tutorial/venv.html for more information.
+Installation is generally recommended within a seperate virtual environment to avoid version dependency problems, please see https://docs.python.org/3/tutorial/venv.html for more information.
 
 
 ## Usage 
@@ -31,7 +31,7 @@ If the project was installed with PyPip the tool interfaces may be run directly 
 ```bash
 EopTool
 HelmertTool
-icrfTool
+IcrfTool
 ```
 
 Otherwise, run them as modules using
