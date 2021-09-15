@@ -1,0 +1,47 @@
+--------- HELMERT TOOL DOCUMENTATION ----------
+
+HelmertTool loads two trf-files in .sta format and helps studying their differences and finding the helmert transform between them through least square regression.
+The program assumes that the two files use the same naming convention for stations.
+
+
+Graphical user interface
+----------------------------------------------
+The plot to the right shows a world map where residuals are plotted between different stations. 
+The upper plot shows residuals decomposed into North, East components while the bottom plot shows the Up components. 
+The plot has a tool bar where you may pan, zoom, adjust axes and save the plot.
+
+The control panel to the left has the following controls:
+    -Transform from, transform to: Write or navigate to the data files. 
+    -Select stations: A button bringing up a list of stations with checkboxes to include or exclude certain measurements.
+        -Default: Selects the stations specified in the transform_sites.txt file 
+        -Sigma: Sort stations on sigma value
+        -Name: Sort stations by name 
+    -Weighted: Weighted/ unweighted fit  
+    -N parameters: The standard helmert transform uses 7 parameters but the tools allow to have a separte
+                   scale paramter for Z (8 parameters) or all three dimensions (9 parameters)
+    -Calculate parameters: Calculates the parameters for the current settings.
+    -Plot residuals: Plots the residuals for the transform with the current parameters 
+    -Reset parameters: Sets all parameter values to 0.
+
+To the bottom are the calculated helmert parameters and uncertainities for the weighted transform.
+The checkbox determines wheter the value is calculated by the program or entered by the user.
+
+At the bottom are two statistics calculated of the trend fit, chi squared and weighted root mean squared as well as an export
+button to save a text file with the parameters and frames. 
+
+Both the map and the file used for default stations are overwriteable by having a file named map.png or transform_sites.txt in your current working directionary. 
+
+
+Library
+----------------------------------------------
+The code is documented with doc strings. Try for example in python
+
+    import HelmertTool
+    help(HelmertTool)
+    help(HelmertTool.calc)
+    help(HelmertTool.calc.calculate_parameters)
+
+or look up automatic documentation generation tools: https://wiki.python.org/moin/DocumentationTools
+Also check out the example "cook book" file helmert_tool_ex under examples.
+
+----------------------------------------------

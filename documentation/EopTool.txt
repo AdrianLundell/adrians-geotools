@@ -1,0 +1,41 @@
+-------- EOP TOOL DOCUMENTATION --------
+
+EopTool loads two eop-files in .eop, .eob, or .fil format, interpolates them to a common sampling frequency and caluclates the trend of their residuals.
+The file with the original sampling frequency (or epoch) is called the primary file, while the interpolated frame is called the secondary frame.
+
+
+Graphical user interface
+----------------------------------------
+The first row of plots show the loaded series with their residuals in the middle. The second row shows their sigma values.
+Each plot has a tool bar where you may pan, zoom, adjust axes and save the plot.
+
+The control panel to the bottom left has the following controls:
+    -Data A, Data B: Write or navigate to the data files. The radio button to the right determines which frame is used as the primary one.
+    -Year min: Lower bound of the displayed data serie
+    -Year max: Upper bound of the displayed data serie 
+    -Sigma max: The maximum allowed sigma value, either as a percentage (show best xx% of values) or as an absolute threshold.
+    -Year offset: the year used as year zero in the trend regression
+    -Selected serie: Which serie from th data file to use (x-wobble, y-wobble or ut1)
+    -Weighted: Weighted/ ordinary least squares 
+    -Remove trend: Wheter to subtract the trend or show it as a line in the plots.
+
+To the bottom right are the calculated trend of the residuals. Each box represent one term in the equation (with t offset by the specified amount)
+    A + B(t) + Csin(t*2pi) + Dcos(t*2pi) + Csin(t*4pi) + Dcos(t*4pi)
+The checkbox determines wheter the value is calculated by the program or entered by the user.
+
+At the bottom are two statistics calculated of the trend fit, chi squared and weighted root mean squared. 
+
+
+Library
+----------------------------------------
+The code is documented with doc strings. Try for example in python
+
+    import EopTool
+    help(EopTool)
+    help(EopTool.calc)
+    help(EopTool.calc.predict_residuals)
+
+or look up automatic documentation generation tools: https://wiki.python.org/moin/DocumentationTools
+Also check out the example "cook book" file eop_tool_ex under examples.
+
+----------------------------------------
