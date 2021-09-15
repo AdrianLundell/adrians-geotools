@@ -2,25 +2,26 @@ This document is meant to help simplifying future extensions of the code by expl
 
 
 All three tools are included as seperate packages built into one python library with setuptools, see https://setuptools.readthedocs.io/
-They share some common methods and structure but are kept separate to avoid unneccessary code breakeage.
+They share some common methods and structure but are kept separate to avoid unneccessary code entanglement.
 Data is generally stored in pandas dataframes.
 
 Each tool does in large consist of three parts:
 
-logic: These modules are contained on the package level as they are meant to be used either with the gui or as imports.
+logic: Mdules are contained on the package level as they are meant to be used either with the gui or as imports.
        The methods should handle single specific operations directly on the data and are split into three categories
         -calc, for calulations.
         -io, for loading and saving data
         -visualisation, for plotting.
 
-graphic interface: These modules are kept in the interface subpackage and are programmed with tkinter. New elements are introduced as subclasses of the
-        tkinger frame. 
+graphic interface: Modules kept in the interface subpackage, using the tkinter library. New elements are introduced as subclasses of the
+        tkinter frame. 
 
 state: This is a dataclass containing all variables used by the interface (storing the current state of the gui) in a structured way.
        Each value is store in a tkinter double/boolen/textvariable as these give direct support for callbacks and automatic updating of the gui. 
        The idea is to declare all variables in one place and keeping track of them rather than having them scattered all over the interface classes, as well as introducing a layer
        between interface data and logic data. 
 
+additionally a units.py file is used in all packages, containing unit data.
 
 To debug with Visual Studio Code you may use the following settings in the launch.json file (using HelmertTool as an example)
 
@@ -31,6 +32,4 @@ To debug with Visual Studio Code you may use the following settings in the launc
             "module": "HelmertTool",
             "cwd": "C:/Users/Adrian/Documents/NVI/adrians-geotools/",
             "console": "integratedTerminal"
-        },
-
-
+        }

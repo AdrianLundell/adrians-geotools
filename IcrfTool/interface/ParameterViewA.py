@@ -1,5 +1,4 @@
 import tkinter as tk 
-import tkinter.ttk as ttk 
 
 from .ParameterEntry import ParameterEntry
 from ..units import *

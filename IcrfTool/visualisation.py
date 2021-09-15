@@ -1,13 +1,9 @@
-import geopandas as gpd
 import pandas as pd 
 import numpy as np
 import matplotlib.pyplot as plt
-
-worldmap = gpd.read_file(gpd.datasets.get_path("naturalearth_lowres"))
     
 def plot_residuals(df, ax):
-    """Plots alph-residuals scattered over a world map to axes"""
-    #worldmap.plot(color="lightgrey", ax=ax)
+    """"""
     ax.set_title("αδ-residual components")
 
     if not df is None:

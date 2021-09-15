@@ -1,8 +1,5 @@
-from ctypes import resize
 import tkinter as tk 
 import tkinter.ttk as ttk
-import pandas as pd 
-import numpy as np 
 
 from .FileSelecter import FileSelecter
 from .ParameterViewA import ParameterViewA
@@ -11,10 +8,10 @@ from .Plot import Plot
 from .SelectStations import SelectStationsWindow 
 
 from .InterfaceState import InterfaceState
-from ..load import load_src_posn
+from ..io import load_src_posn
 
-from ..plot import plot_residuals
-from ..transform import *
+from ..visualisation import plot_residuals
+from ..calc import *
 
 class MainWindow(tk.Tk):
     """Main application class for the helmert transfrom interface"""
