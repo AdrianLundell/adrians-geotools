@@ -1,7 +1,9 @@
 --------- ICRF TOOL DOCUMENTATION ----------
 
-IcrfTool loads two trf-files in .sta format and helps studying their differences and finding the Icrf transform between them through least square regression.
+IcrfTool loads two icrf-files in the format examplified in icrf2_src_posn and helps studying their differences and finding the Icrf transform between them through least square regression.
 The program assumes that the two files use the same naming convention for stations.
+
+[Disclaimer: IcrfTool is currently underdeveloped and less tested in comparison to the other two tools]
 
 
 Graphical user interface
@@ -12,13 +14,11 @@ The plot has a tool bar where you may pan, zoom, adjust axes and save the plot.
 
 The control panel to the left has the following controls:
     -Transform from, transform to: Write or navigate to the data files. 
-    -Select stations: A button bringings up a list of stations with checkboxes to include or exclude certain measurements.
-        -Default: Selects the stations specified in the transform_sites.txt file 
-        -Sigma: Sort stations on sigma value
-        -Name: Sort stations by name 
     -Weighted: Weighted/ unweighted fit  
-    -N parameters: The standard Icrf transform uses 7 parameters but the tools allow to have a separte
-                   scale paramter for Z (8 parameters) or all three dimensions (9 parameters)
+    -Transform type: The Icrf transform may be calculated in two ways:
+        -A: as described in https://arxiv.org/pdf/2010.13625.pdf
+        -B: ∆α cosδ = A1 cosαsinδ + A2 sinα sinδ − A3 cosδ + Dα(δ−δ0)
+            ∆δ      =−A1 sinα + A2cosα + Dδ(δ−δ0) + Bδ
     -Calculate parameters: Calculates the parameters for the current settings.
     -Plot residuals: Plots the residuals for the transform with the current parameters 
     -Reset parameters: Sets all parameter values to 0.

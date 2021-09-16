@@ -19,7 +19,7 @@ class ParameterViewB(tk.Frame):
 
             frames.append(tk.Frame(self))
             for i, name in enumerate(name_list):
-               #tk.Label(frames[j], text=name).grid(row=0, column=2*i, pady=5, padx=3, sticky="w")
+                tk.Label(frames[j], text=name).grid(row=0, column=2*i, pady=5, padx=3, sticky="w")
                 self.entry_dict[name] = ParameterEntry(frames[j], parameter_dict[name])
                 self.entry_dict[name].set_unit(nano)
                 self.entry_dict[name].grid(row = 0, column = 2*i+1)

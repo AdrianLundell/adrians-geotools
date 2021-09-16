@@ -83,7 +83,7 @@ def __load_txt(fpath: str) -> pd.DataFrame:
     df = pd.read_fwf(fpath, names = TXT_COLUMN_NAMES, engine = 'python', skiprows = 14, infer_nrows=300)
     df = df.set_index("MJD")
 
-    leapsecond_df = __load_leapseconds("C:/Users/Adrian/Documents/NVI/EopTool/ut1ls.dat")
+    leapsecond_df = __load_leapseconds(get_path("ut1ls.dat"))
     df = df.join(leapsecond_df["TAI_UTC"], how="outer")
     df["TAI_UTC"] = df["TAI_UTC"].ffill()
     df["UT1"] = df["UT1"] - df["TAI_UTC"]
@@ -93,7 +93,7 @@ def __load_txt(fpath: str) -> pd.DataFrame:
 def __load_fil(fpath : str) -> pd.DataFrame:
     """Load a .fil into a pandas dataframe"""
 
-    leapsecond_df = __load_leapseconds("C:/Users/Adrian/Documents/NVI/EopTool/ut1ls.dat")
+    leapsecond_df = __load_leapseconds(get_path("ut1ls.dat"))
     FIL_COLUMN_NAMES = ["MJD", "X", "X_SIGMA", "Y", "Y_SIGMA", "UT1_SHORT", "UT1_SIGMA"]
     FIL_COLUMN_SPECS = [(7, 15), (18,27), (28, 36), (36,46), (47,57), (58,69), (70,79)]
     
@@ -149,4 +149,15 @@ def __load_leapseconds(file: str) -> pd.DataFrame:
     
     return ut1ls_df[["TAI_UTC"]].sort_index()
 
+def get_path(file_name):
+    """Checks for the specified file. If it exists in the current working directory it returns that path, else the default path"""
+    default_path, _ = os.path.split(__file__)
+    default_file = os.path.join(default_path, "resources", file_name)
 
+    working_path = os.getcwd()
+    working_file = os.path.join(working_path, file_name)
+
+    if os.path.exists(working_file):
+        return working_file
+    else:
+        return default_file 

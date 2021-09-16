@@ -5,6 +5,7 @@ def load_src_posn(fpath: str, epoch: float = 0):
     """Load a .sta ICRF file to a pandas dataframe"""
     columns = ["ICRF", "ICRF_Designation", "IERS_Destignation", "Defining_source", "Right_Ascension_h", "Right_Ascension_m", "Right_Ascension_s", "Declination_o", "Declination_prime", "Declination_bis", "Right_Ascention_Uncertainty_s", "Declination_Uncertainty_bis", "Correction", "Mean_MJD", "First_MJD", "Last_MJD", "Nb_sess", "Nb_del", "Nb_rat"]
     df = pd.read_fwf(fpath, skiprows = 23, header = None, names = columns)
+    df = df[~df.Defining_source.isna()]
     
     index = df.IERS_Destignation
     df = pd.DataFrame(

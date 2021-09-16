@@ -1,4 +1,4 @@
-# adrianx-geotools
+# adrians-geotools
 Adrians-geotools is a package of three python tools originally developed by Adrian Lundell for NVI Inc. during an internship over the summer 2021.
 It contains the three tools 
 
@@ -45,6 +45,8 @@ python -m IcrfTool
 assuming adrian-geotools to be your working directory. 
 
 To use the tools in your own python scripts simply import them as with any other library, e.g.
+
+Example files are runneable only with the pypi installation, or by moving the files.
 
 ```python
 from HelmertTool.calc import calculate_parameters

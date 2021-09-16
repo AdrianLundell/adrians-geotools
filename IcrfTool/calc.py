@@ -121,8 +121,8 @@ def calculate_residuals(df_from: pd.DataFrame, df_to: pd.DataFrame):
     """Returns the from dataframe with computed residuals"""
     df_combined = pd.merge(df_from, df_to, how = "inner", left_index=True, right_index=True, suffixes = ("_from", "_to"))
     
-    df_from["dAlpha"] = df_combined.alpha_to-df_combined.alpha_from * 10**9
-    df_from["dDelta"] = df_combined.delta_to-df_combined.delta_from * 10**9
+    df_from["dAlpha"] = (df_combined.alpha_to-df_combined.alpha_from)*10**9
+    df_from["dDelta"] = (df_combined.delta_to-df_combined.delta_from)*10**9
 
     return df_from
 

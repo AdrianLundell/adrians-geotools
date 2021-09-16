@@ -53,7 +53,7 @@ class MainWindow(tk.Tk):
         self.transform_type_combo = ttk.Combobox(self.data_frame, textvariable=self.state.transform.type, values = ['A', 'B'], width=3)
         
         self.calculate_button = ttk.Button(self.data_frame, text = "Calculate parameter", state = "disable")
-        self.transform_button = ttk.Button(self.data_frame, text = "Transform", state = "disable")
+        self.transform_button = ttk.Button(self.data_frame, text = "Plot residuals", state = "disable")
         self.reset_button = ttk.Button(self.data_frame, text = "Reset parameters")
         
         #self.line2 = ttk.Separator(self, orient = "horizontal")
@@ -87,7 +87,7 @@ class MainWindow(tk.Tk):
         self.from_file_selecter.grid(row=1, column=0, sticky="ew", pady=4, columnspan=6)
         self.to_file_selecter_label.grid(row=2, column=0, sticky="nw")
         self.to_file_selecter.grid(row=3, column=0, sticky="ew", pady=4, columnspan=6)
-        self.select_stations_button.grid(row=4, column=0, sticky = "w", pady=10)
+        #self.select_stations_button.grid(row=4, column=0, sticky = "w", pady=10)
 
         #self.line1.grid(row=4, column=0, sticky="ew")
 
@@ -106,10 +106,10 @@ class MainWindow(tk.Tk):
 
         self.parameter_frame.grid(row=2, column=0, padx=30, pady=50, sticky="news")
         self.parameter_view.grid(row=0, column=0, columnspan=4, pady=10, sticky="ew")
-        self.chi2_label.grid(row=1, column=0, sticky="n")
-        self.chi_2_value.grid(row=1, column=1, sticky="n")
-        self.wrms_label.grid(row=1, column=2, sticky="n")
-        self.wrms_value.grid(row=1, column=3, sticky="n")
+        #self.chi2_label.grid(row=1, column=0, sticky="n")
+        #self.chi_2_value.grid(row=1, column=1, sticky="n")
+        #self.wrms_label.grid(row=1, column=2, sticky="n")
+        #self.wrms_value.grid(row=1, column=3, sticky="n")
 
         self.plot_frame.grid(row=0, column=1, rowspan=3, sticky="news")
         self.plot.pack(expand=True, fill='both')
@@ -223,8 +223,8 @@ class MainWindow(tk.Tk):
             parameter_dict = {name : var.get() for name, var in self.state.parameters_b.values.items()}
 
 
-        df_from = self.df_from#[self.stations.Selected]
-        df_to = self.df_to#[self.stations.Selected]
+        df_from = self.df_from
+        df_to = self.df_to
         
         type = self.state.transform.type.get()
 
@@ -234,7 +234,7 @@ class MainWindow(tk.Tk):
     def update_plot(self, *args):
         self.plot.clear()
         if not self.transformed is None:
-            transformed = self.transformed#[self.stations.Selected]
+            transformed = self.transformed
         else:
             transformed = None
         plot_residuals(transformed, self.plot.axes)
@@ -244,15 +244,21 @@ class MainWindow(tk.Tk):
         df_from = self.df_from#[self.stations.Selected]
         df_to = self.df_to#[self.stations.Selected]
         
-        #standared_errors = df_from.X_sigma**2 + df_from.Y_sigma**2 + df_from.Z_sigma**2 + df_to.X_sigma**2 + df_to.Y_sigma**2 + df_to.Z_sigma**2
-        #value = sum(self.transformed.dX ** 2 / standared_errors)
+        standared_errors = df_from.X_sigma**2 + df_from.Y_sigma**2 + df_from.Z_sigma**2 + df_to.X_sigma**2 + df_to.Y_sigma**2 + df_to.Z_sigma**2
+        value = sum(self.transformed.dX ** 2 / standared_errors)
         
         #self.state.transform.chi_squared.set(self.value_to_string(value))
         #self.state.transform.weighted_root_mean_squared.set(self.value_to_string(value/sum(1/standared_errors)))
 
     def reset_parameters(self, *args):
         """Reset all parameter values to zero"""
-        for parameter in self.state.parameters.get_parameter_dict().values():
+        type = self.state.transform.type.get()
+        if type == "A":
+            parameters = self.state.parameters_a.get_parameter_dict().values()
+        if type == "B":
+            parameters = self.state.parameters_b.get_parameter_dict().values()
+        
+        for parameter in parameters:
             parameter.value.set(0)
             if self.state.transform.weighted:
                 parameter.sigma.set(0)

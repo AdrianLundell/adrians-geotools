@@ -10,7 +10,7 @@ from .Plot import Plot
 from .SelectStations import SelectStationsWindow 
 
 from .InterfaceState import InterfaceState
-from ..io import load_sta
+from ..io import load_sta, to_string
 
 from ..visualise import plot_residuals
 from ..calc import *
@@ -203,6 +203,7 @@ class MainWindow(tk.Tk):
             transformed = self.transformed#[self.stations.Selected]
         else:
             transformed = None
+
         plot_residuals(transformed, self.plot.axes[0], self.plot.axes[1])
         self.plot.draw()
 
@@ -211,34 +212,12 @@ class MainWindow(tk.Tk):
         if f is None: # asksaveasfile return `None` if dialog closed with "cancel".
             return
 
-        string = self.to_string()
+        parameters = {name : var.get() for name, var in self.state.parameters.values.items()}
+        sigmas = {name : var.get() for name, var in self.state.parameters.sigmas.items()}
+
+        string = to_string(self.df_from, self.df_to, self.transformed, parameters, sigmas)
         f.write(string)
         f.close()
-
-    def to_string(self):
-
-        transformation = [key for key in self.state.parameters.values.keys()]
-        values = [var.get() for var in self.state.parameters.values.values()]
-        sigmas = [var.get() for var in self.state.parameters.sigmas.values()]
-        parameter_df = pd.DataFrame({"transformation" : transformation, "values" : values, "sigmas" : sigmas})
-
-        frame_df = self.df_from.merge(self.df_to, left_index=True, right_index=True, suffixes=("_Frame1", "_Frame2"))
-        frame_df = frame_df.drop(columns = ["Station_Name_Frame1", "Date_Frame1", "Station_Name_Frame2", "Date_Frame2", "LAT_Frame2", "LONG_Frame2", ])
-        if not self.transformed is None:
-            frame_df = frame_df.merge(self.transformed, left_index=True, right_index=True, suffixes=("", "_Transformed"))
-
-        string = f"""Begin Transform
-{parameter_df.to_string(index=False)}
-
-End Transform
----
-Begin Frame
-{frame_df.to_string(index=False)}
-
-End Frame
-        """ 
-
-        return string
 
     def update_statistics(self):
         df_from = self.df_from[self.stations.Selected]
